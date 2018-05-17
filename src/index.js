@@ -1,17 +1,9 @@
 const http = require('http');
 const url = require('url');
 const { Histogram } = require("measured");
-const eventLoopStats = require('./eventLoopStats');
-const gcStats = require("./gcStats");
+const nativeStats = require('./nativeStats');
 
 const METRICS_INTERVAL = parseInt(process.env.METRICS_INTERVAL_OVERRIDE, 10) || 20000; // 20 seconds
-
-// This is reset every metrics submission run.
-let pauseNS = 0;
-
-// gcCount is the number of garbage collections that have been observed between
-// metrics runs. This is reset every metrics submission run.
-let gcCount = 0;
 
 // Collects the event loop ticks, and calculates p50, p95, p99, max
 let delay = new Histogram();
@@ -21,15 +13,7 @@ let delay = new Histogram();
 // beta.
 let uri = url.parse(process.env.HEROKU_METRICS_URL);
 
-// on every garbage collection, update the statistics.
-gcStats.afterGC(stats => {
-  gcCount++;
-
-  if (stats.gctype !== 1) {
-    console.log(stats.gctype);
-  }
-  pauseNS = pauseNS + stats.pause;
-});
+nativeStats.start();
 
 function submitData(data, cb) {
   const postData = JSON.stringify(data);
@@ -54,9 +38,9 @@ function submitData(data, cb) {
   req.end();
 }
 
-// every 20 seconds, submit a metrics payload to metricsURL.
+// every METRICS_INTERVAL seconds, submit a metrics payload to metricsURL.
 setInterval(() => {
-  let ticks = eventLoopStats.sense();
+  let { ticks, gcCount, gcTime } = nativeStats.sense();
   let totalEventLoopTime = ticks.reduce((a, b) => a + b, 0);
 
   ticks.forEach(tick => delay.update(tick));
@@ -68,7 +52,7 @@ setInterval(() => {
   let data = {
     counters: {
       "node.gc.collections": gcCount,
-      "node.gc.pause.ns": pauseNS
+      "node.gc.pause.ns": gcTime,
     },
     gauges: {
       "node.eventloop.usage.percent": aa,
@@ -97,7 +81,5 @@ setInterval(() => {
     }
   });
 
-  pauseNS = 0;
-  gcCount = 0;
   delay.reset();
 }, METRICS_INTERVAL).unref();

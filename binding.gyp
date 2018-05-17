@@ -1,20 +1,11 @@
 {
 	"targets": [
 		{
-			"target_name": "event-loop-stats",
+			"target_name": "native-stats",
 			"sources": [
-				"src/eventLoopStats.cc"
+				"src/nativeStats.cc"
 			],
-			"include_dirs" : [
-				"<!(node -e \"require('nan')\")"
-			]
-		},
-		{
-			"target_name": "gc-stats",
-			"sources": [
-				"src/gcStats.cc"
-			],
-			"include_dirs" : [
+			"include_dirs": [
 				"<!(node -e \"require('nan')\")"
 			]
 		}
