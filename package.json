@@ -1,0 +1,13 @@
+{
+  "name": "heroku-nodejs-metrics-plugin",
+  "version": "0.1.0",
+  "description": "A hack designed to prototype out runtime metrics.",
+  "main": "src/index.js",
+  "scripts": {},
+  "dependencies": {
+    "measured": "^1.1.0",
+    "nan": "^2.9.2"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/heroku/heroku-nodejs-metrics-buildpack"
+}
