@@ -1,8 +1,8 @@
-#include <nan.h>
+#include "napi.h"
+#include <uv.h>
+#include <v8.h>
 #include <list>
-#include <iostream>
 
-using namespace Nan;
 using namespace v8;
 
 uv_prepare_t prepare_handle;
@@ -14,24 +14,28 @@ uint64_t gc_start;
 uint64_t gc_count;
 uint64_t gc_time;
 
-
-void reset() {
+void reset()
+{
   durations.clear();
   gc_count = 0;
   gc_time = 0;
 }
 
 // http://docs.libuv.org/en/v1.x/design.html#the-i-o-loop
-void on_check(uv_check_t* handle) {
+void on_check(uv_check_t *handle)
+{
   tick_start = uv_hrtime() / static_cast<uint64_t>(1e6);
 }
 
-void on_prepare(uv_prepare_t* handle) {
-  if (!tick_start) {
+void on_prepare(uv_prepare_t *handle)
+{
+  if (!tick_start)
+  {
     return;
   }
   const uint64_t tick_end = uv_hrtime() / static_cast<uint64_t>(1e6);
-  if (tick_end < tick_start) {
+  if (tick_end < tick_start)
+  {
     // Should not happen
     return;
   }
@@ -43,12 +47,14 @@ void on_prepare(uv_prepare_t* handle) {
 }
 
 // Callback before GC runs
-static NAN_GC_CALLBACK(recordBeforeGC) {
+void before_gc(v8::Isolate *isolate, v8::GCType type, v8::GCCallbackFlags flags)
+{
   gc_start = uv_hrtime();
 }
 
 // Callback after GC runs
-NAN_GC_CALLBACK(afterGC) {
+void after_gc(v8::Isolate *isolate, v8::GCType type, v8::GCCallbackFlags flags)
+{
   // TODO: `int type` is defined which indicates the type of GC run
   // https://github.com/nodejs/node/blob/554fa24916c5c6d052b51c5cee9556b76489b3f7/deps/v8/include/v8.h#L6137-L6144
   // 1 = scavenge (new)
@@ -57,33 +63,13 @@ NAN_GC_CALLBACK(afterGC) {
 
   const uint64_t gc_end = uv_hrtime();
   const uint64_t duration = gc_end - gc_start;
-  
+
   gc_count += 1;
   gc_time += duration;
 }
 
-static NAN_METHOD(sense) {
-  Local<Array> array = New<v8::Array>(durations.size());
-
-  std::list<uint64_t>::iterator it;
-  int i = 0;
-  for (it = durations.begin(); it != durations.end(); ++it) {
-    Nan::Set(array, i, Nan::New(static_cast<double>(*it)));
-    i += 1;
-  }
-
-  Local<Object> obj = Nan::New<Object>();
-
-  Nan::Set(obj, Nan::New("ticks").ToLocalChecked(), array);
-  Nan::Set(obj, Nan::New("gcCount").ToLocalChecked(), Nan::New(static_cast<double>(gc_count)));
-  Nan::Set(obj, Nan::New("gcTime").ToLocalChecked(), Nan::New(static_cast<double>(gc_time)));
-
-  reset();
-
-  info.GetReturnValue().Set(obj);
-}
-
-NAN_METHOD(start) {
+void add_callbacks()
+{
   reset();
 
   // Event loop callbacks
@@ -96,31 +82,62 @@ NAN_METHOD(start) {
   uv_unref(reinterpret_cast<uv_handle_t *>(&prepare_handle));
 
   // GC callbacks
-  Nan::AddGCPrologueCallback(recordBeforeGC);
-  Nan::AddGCEpilogueCallback(afterGC);
+  v8::Isolate::GetCurrent()->AddGCPrologueCallback(before_gc, v8::kGCTypeAll);
+  v8::Isolate::GetCurrent()->AddGCEpilogueCallback(after_gc, v8::kGCTypeAll);
 }
 
-NAN_METHOD(stop) {
+void remove_callbacks()
+{
   reset();
 
-  // TODO unregister callbacks
+  // Event loop callbacks
+  uv_check_stop(&check_handle);
+  uv_prepare_stop(&prepare_handle);
+
+  // GC callbacks
+  v8::Isolate::GetCurrent()->RemoveGCPrologueCallback(before_gc);
+  v8::Isolate::GetCurrent()->RemoveGCEpilogueCallback(after_gc);
 }
 
-NAN_MODULE_INIT(init) {
-  Nan::Set(target,
-    Nan::New("sense").ToLocalChecked(),
-    Nan::GetFunction(Nan::New<FunctionTemplate>(sense)).ToLocalChecked()
-  );
-
-  Nan::Set(target,
-    Nan::New("start").ToLocalChecked(),
-    Nan::GetFunction(Nan::New<FunctionTemplate>(start)).ToLocalChecked()
-  );
-
-  Nan::Set(target,
-    Nan::New("stop").ToLocalChecked(),
-    Nan::GetFunction(Nan::New<FunctionTemplate>(stop)).ToLocalChecked()
-  );
+void Start(const Napi::CallbackInfo &info)
+{
+  add_callbacks();
 }
 
-NODE_MODULE(eventLoopStats, init)
+void Stop(const Napi::CallbackInfo &info)
+{
+  remove_callbacks();
+}
+
+Napi::Object Sense(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  Napi::Object obj = Napi::Object::New(env);
+  Napi::Array arr = Napi::Array::New(env, durations.size());
+
+  std::list<uint64_t>::iterator it;
+  uint32_t i = 0;
+  for (it = durations.begin(); it != durations.end(); ++it)
+  {
+    arr.Set(i, Napi::Number::New(env, *it));
+    i += 1;
+  }
+
+  obj.Set(Napi::String::New(env, "ticks"), arr);
+  obj.Set(Napi::String::New(env, "gcCount"), Napi::Number::New(env, gc_count));
+  obj.Set(Napi::String::New(env, "gcTime"), Napi::Number::New(env, gc_time));
+
+  reset();
+
+  return obj;
+}
+
+Napi::Object Init(Napi::Env env, Napi::Object exports)
+{
+  exports.Set(Napi::String::New(env, "sense"), Napi::Function::New(env, Sense));
+  exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, Start));
+  exports.Set(Napi::String::New(env, "stop"), Napi::Function::New(env, Stop));
+  return exports;
+}
+
+NODE_API_MODULE(native_stats, Init);
