@@ -6,8 +6,16 @@
   "scripts": {},
   "dependencies": {
     "measured": "^1.1.0",
-    "nan": "^2.9.2"
+    "nan": "^2.9.2",
+    "node-gyp": "^3.7.0",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8"
   },
   "license": "MIT",
-  "repository": "https://github.com/heroku/heroku-nodejs-metrics-buildpack"
+  "repository": "https://github.com/heroku/heroku-nodejs-metrics-buildpack",
+  "binary": {
+    "module_name": "heroku-nodejs-metrics-plugin",
+    "module_path": "./pkg/",
+    "host": "none"
+  }
 }
