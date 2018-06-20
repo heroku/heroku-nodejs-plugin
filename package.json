@@ -1,9 +1,8 @@
 {
   "name": "heroku-nodejs-metrics-plugin",
+  "private": true,
   "version": "0.1.0",
-  "description": "A hack designed to prototype out runtime metrics.",
-  "main": "src/index.js",
-  "scripts": {},
+  "description": "A module that forwards stats from a Node process into the Heroku metrics system",
   "dependencies": {
     "measured": "^1.1.0",
     "nan": "^2.9.2",
@@ -12,10 +11,5 @@
     "webpack-cli": "^3.0.8"
   },
   "license": "MIT",
-  "repository": "https://github.com/heroku/heroku-nodejs-metrics-buildpack",
-  "binary": {
-    "module_name": "heroku-nodejs-metrics-plugin",
-    "module_path": "./pkg/",
-    "host": "none"
-  }
+  "repository": "https://github.com/heroku/heroku-nodejs-metrics-buildpack"
 }
