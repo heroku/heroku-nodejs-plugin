@@ -1,4 +1,4 @@
-# node-metrics-plugin
+# heroku-nodejs-plugin
 
 A metrics plugin to add Heroku runtime metrics to an existing Node.js application.
 

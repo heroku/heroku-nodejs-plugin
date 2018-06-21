@@ -1,5 +1,5 @@
 {
-  "name": "heroku-nodejs-metrics-plugin",
+  "name": "heroku-nodejs-plugin",
   "private": true,
   "version": "0.1.0",
   "description": "A module that forwards stats from a Node process into the Heroku metrics system",
@@ -11,5 +11,5 @@
     "webpack-cli": "^3.0.8"
   },
   "license": "MIT",
-  "repository": "https://github.com/heroku/heroku-nodejs-metrics-buildpack"
+  "repository": "https://github.com/heroku/heroku-nodejs-plugin/settings"
 }

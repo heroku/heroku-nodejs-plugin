@@ -1,7 +1,7 @@
 {
 	"targets": [
 		{
-			"target_name": "heroku-nodejs-metrics-plugin",
+			"target_name": "heroku-nodejs-plugin",
 			"sources": [
 				"src/nativeStats.cc"
 			],
@@ -12,10 +12,10 @@
 		{
 			"target_name": "action_after_build",
 			"type": "none",
-			"dependencies": ["heroku-nodejs-metrics-plugin"],
+			"dependencies": ["heroku-nodejs-plugin"],
 			"copies": [
 				{
-					"files": ["./build/Release/heroku-nodejs-metrics-plugin.node"],
+					"files": ["./build/Release/heroku-nodejs-plugin.node"],
 					"destination": "./dist/"
 				}
 			]
