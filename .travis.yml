@@ -7,4 +7,4 @@ env:
   - STACK=heroku-16
   - STACK=cedar-14
 install: docker pull "heroku/${STACK/-/:}"
-script: ./build.sh $STACK
+script: docker run -v $(pwd):/plugin:ro --rm -it heroku/${STACK/-/:} bash -c "cp -r /plugin /plugin_build; cd /plugin_build; ./build.sh $STACK 8.x"
