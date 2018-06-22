@@ -4,13 +4,7 @@
 set -o errexit    # always exit on error
 set -o pipefail   # don't ignore exit codes when piping output
 
-STACK=${1:-}
-NODE_VERSION=${2:-}
-
-apt-get update -y
-apt-get install g++ -y
-
-echo $(which g++)
+NODE_VERSION=${1:-}
 
 install_nodejs() {
   local version=${1:-8.x}
@@ -34,6 +28,11 @@ install_nodejs() {
   chmod +x $dir/bin/*
 }
 
+install_compiler() {
+    apt-get update -y
+    apt-get install g++ -y
+}
+
 get_os() {
   uname | tr A-Z a-z
 }
@@ -54,6 +53,10 @@ platform="$os-$cpu"
 # delete /build and /dist if it exists
 rm -rf build dist bin
 
+if ! type "g++" > /dev/null 2> /dev/null; then
+    install_compiler
+fi
+
 # if node and npm is undefined, install the specified version
 if ! type "node" > /dev/null 2> /dev/null; then
     mkdir bin
@@ -65,10 +68,6 @@ fi
 if [[ ! -d "node_modules" ]]; then
     npm install
 fi
-
-echo $PATH
-echo $(which g++)
-echo $(which gcc)
 
 # run the build using node-gyp
 ./node_modules/.bin/node-gyp configure build
@@ -82,5 +81,3 @@ cp ./src/README.md ./dist/README.md
 echo $(ls ./dist)
 
 exit 0
-
-
