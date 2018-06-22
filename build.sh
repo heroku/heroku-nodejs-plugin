@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# bin/compile <heroku-stack>
+
+STACK=${1:-}
 
 # delete /build and /dist if it exists
 rm -rf build dist
@@ -11,3 +14,7 @@ rm -rf build dist
 
 # copy over the README
 cp ./src/README.md ./dist/README.md
+
+echo $STACK
+
+exit 0
