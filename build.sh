@@ -6,6 +6,11 @@ STACK=${1:-}
 # delete /build and /dist if it exists
 rm -rf build dist
 
+# install node modules
+if [[ ! -d "node_modules" ]]; then
+    npm install
+fi
+
 # run the build using node-gyp
 ./node_modules/.bin/node-gyp configure build
 
