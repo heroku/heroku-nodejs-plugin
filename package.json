@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "description": "A module that forwards stats from a Node process into the Heroku metrics system",
+  "scripts": {
+    "test": "exit 0"
+  },
   "dependencies": {
     "measured": "^1.1.0",
     "nan": "^2.9.2",
