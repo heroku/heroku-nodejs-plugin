@@ -1,10 +1,23 @@
-language: bash
-sudo: required
-services:
-  - docker
-env:
-  - STACK=heroku-18
-  - STACK=heroku-16
-  - STACK=cedar-14
-install: docker pull "heroku/${STACK/-/:}"
-script: docker run -v $(pwd):/plugin:ro --rm -it heroku/${STACK/-/:} bash -c "cp -r /plugin /plugin_build; cd /plugin_build; ./build.sh $STACK 8.x"
+language: node_js
+sudo: false
+node_js:
+  - "8"
+  - "9"
+  - "10"
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+      - gcc-4.8-multilib
+      - g++-4.8-multilib
+      - gcc-multilib
+      - g++-multilib 
+os:
+  - linux
+before_deploy:
+  - ARCHIVE_NAME="\${TRAVIS_TAG:-latest}-$TRAVIS_OS_NAME-\`uname -m\`.tar"
+  - $TRAVIS_BUILD_DIR/build.sh
+  - tar --create --verbose --file="$ARCHIVE_NAME" --directory "$TRAVIS_BUILD_DIR/dist"
+script: echo $(ls)
