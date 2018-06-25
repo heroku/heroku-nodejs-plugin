@@ -15,5 +15,5 @@
     "webpack-cli": "^3.0.8"
   },
   "license": "MIT",
-  "repository": "https://github.com/heroku/heroku-nodejs-plugin/settings"
+  "repository": "https://github.com/heroku/heroku-nodejs-plugin"
 }
