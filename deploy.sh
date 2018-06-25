@@ -3,13 +3,13 @@
 set -o errexit    # always exit on error
 set -o pipefail   # don't ignore exit codes when piping output
 
-echo $(ls dist)
-echo $TRAVIS_TAG
-echo $TRAVIS_NODE_VERSION
-echo $TRAVIS_EVENT_TYPE
-echo $TRAVIS_COMMIT_MESSAGE
+if [[ $TRAVIS_EVENT_TYPE == "push" ]] && [[ -n $TRAVIS_TAG ]]; then
+    ARCHIVE_NAME="heroku-nodejs-plugin-node-$TRAVIS_NODE_VERSION-$TRAVIS_TAG.tar"
+    tar --create --verbose --file="$ARCHIVE_NAME" --directory "$TRAVIS_BUILD_DIR/dist"
 
+    echo "Successfully created tar"    
+    echo $(ls .)
+else
+    echo "Skipping deploy because event type is: $TRAVIS_EVENT_TYPE and git tag is: $TRAVIS_TAG"
+fi
 
-# - ARCHIVE_NAME="$TRAVIS_NODE_VERSION-${TRAVIS_TAG:-latest}-$TRAVIS_OS_NAME-`uname -m`.tar"
-# - $TRAVIS_BUILD_DIR/build.sh
-# - tar --create --verbose --file="$ARCHIVE_NAME" --directory "$TRAVIS_BUILD_DIR/dist"
