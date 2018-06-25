@@ -15,13 +15,12 @@ ARCHIVE_NAME="heroku-nodejs-plugin-node-$TRAVIS_NODE_VERSION-$TRAVIS_TAG.tar.gz"
 
 echo "archive name: $ARCHIVE_NAME"
 
-echo "build dir: $TRAVIS_BUILD_DIR"
+echo $(ls $TRAVIS_BUILD_DIR/dist)
 
 # Compress the built directory into a tarball
-tar -czf --file="$ARCHIVE_NAME" --directory "./dist"
+tar -czf --file="$ARCHIVE_NAME" --directory "$TRAVIS_BUILD_DIR/dist"
 
 echo "Successfully created tar"    
-echo $(ls .)
 
 # Generate a SHA and save that
 
