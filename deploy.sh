@@ -18,7 +18,7 @@ echo "archive name: $ARCHIVE_NAME"
 echo $(ls $TRAVIS_BUILD_DIR/dist)
 
 # Compress the built directory into a tarball
-tar -czf "$ARCHIVE_NAME" "$TRAVIS_BUILD_DIR/dist/"
+tar -czf $ARCHIVE_NAME dist/
 
 echo "Successfully created tar"    
 
