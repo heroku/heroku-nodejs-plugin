@@ -10,7 +10,7 @@ TRAVIS_TAG="latest"
 
 # Name the tarball
 ARCHIVE_NAME="heroku-nodejs-plugin-node-$TRAVIS_NODE_VERSION-$TRAVIS_TAG.tar.gz"
-ARCHIVE_SHA_NAME="heroku-nodejs-plugin-node-$TRAVIS_NODE_VERSION-$TRAVIS_TAG.sha1"
+ARCHIVE_SHA_NAME="heroku-nodejs-plugin-node-$TRAVIS_NODE_VERSION-$TRAVIS_TAG.sha512"
 
 echo "Saving build as $ARCHIVE_NAME"
 
@@ -20,7 +20,7 @@ tar -czf $ARCHIVE_NAME dist/
 echo "Successfully created tar"    
 
 # Generate a SHA and save that
-sha1sum $ARCHIVE_NAME > $ARCHIVE_SHA_NAME
+sha512sum $ARCHIVE_NAME > $ARCHIVE_SHA_NAME
 
 cat $ARCHIVE_SHA_NAME
 
