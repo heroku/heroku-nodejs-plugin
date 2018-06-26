@@ -24,14 +24,15 @@ sha512sum $ARCHIVE_NAME > $ARCHIVE_SHA_NAME
 
 # Publish to github releases
 
-npx publish-release \
-  --assets $ARCHIVE_NAME,$ARCHIVE_SHA_NAME \
-  --token $GITHUB_TOKEN \
+npx github-release upload \
   --owner heroku \
   --repo heroku-nodejs-plugin \
+  --token $GITHUB_TOKEN \
   --tag $TRAVIS_TAG \
   --name $TRAVIS_TAG \
-  --notes "See CHANGELOG"
+  --body $TRAVIS_TAG \
+  $ARCHIVE_NAME $ARCHIVE_SHA_NAME
+
 
 # else
 #     echo "Skipping deploy because event type is: $TRAVIS_EVENT_TYPE and git tag is: $TRAVIS_TAG"
