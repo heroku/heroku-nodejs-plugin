@@ -4,7 +4,7 @@ set -o errexit    # always exit on error
 set -o pipefail   # don't ignore exit codes when piping output
 
 # override this for testing while developing
-TRAVIS_TAG="latest"
+TRAVIS_TAG="testing"
 
 # if [[ $TRAVIS_EVENT_TYPE == "push" ]] && [[ -n $TRAVIS_TAG ]]; then
 
@@ -22,9 +22,9 @@ echo "Successfully created tar"
 # Generate a SHA and save that
 sha512sum $ARCHIVE_NAME > $ARCHIVE_SHA_NAME
 
-cat $ARCHIVE_SHA_NAME
-
 # Publish to github releases
+
+npx publish-release --assets $ARCHIVE_NAME,$ARCHIVE_SHA_NAME --token $GITHUB_TOKEN --owner heroku --repo heroku-nodejs-plugin --tag $TRAVIS_TAG
 
 # else
 #     echo "Skipping deploy because event type is: $TRAVIS_EVENT_TYPE and git tag is: $TRAVIS_TAG"
