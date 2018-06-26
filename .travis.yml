@@ -14,5 +14,3 @@ os:
 - linux
 after_success:
 - ./deploy.sh
-deploy:
-  skip_cleanup: true
