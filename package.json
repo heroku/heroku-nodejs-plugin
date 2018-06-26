@@ -4,10 +4,11 @@
   "version": "0.1.0",
   "description": "A module that forwards stats from a Node process into the Heroku metrics system",
   "scripts": {
-    "install": "./build.sh",
+    "postinstall": "./build.sh",
     "test": "exit 0"
   },
   "dependencies": {
+    "github-release-cli": "^0.4.1",
     "measured": "^1.1.0",
     "nan": "^2.9.2",
     "node-gyp": "^3.7.0",
