@@ -58,7 +58,6 @@ NAN_GC_CALLBACK(afterGC)
   // https://github.com/nodejs/node/blob/554fa24916c5c6d052b51c5cee9556b76489b3f7/deps/v8/include/v8.h#L6137-L6144
   // 1 = scavenge (new)
   // 2 = mark and sweep (old)
-  // others = ??? unsure
 
   const uint64_t gc_end = uv_hrtime();
   const uint64_t duration = gc_end - gc_start;
@@ -112,7 +111,13 @@ NAN_METHOD(stop)
 {
   reset();
 
-  // TODO unregister callbacks
+  // Event loop callbacks
+  uv_check_stop(&check_handle);
+  uv_prepare_stop(&prepare_handle);
+
+  // GC callbacks
+  Nan::RemoveGCPrologueCallback(recordBeforeGC);
+  Nan::RemoveGCEpilogueCallback(afterGC);
 }
 
 NAN_MODULE_INIT(init)
