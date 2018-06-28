@@ -16,7 +16,7 @@
 			"copies": [
 				{
 					"files": ["./build/Release/heroku-nodejs-plugin.node"],
-					"destination": "./dist/"
+					"destination": "./heroku-nodejs-plugin/"
 				}
 			]
 		}
