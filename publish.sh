@@ -36,11 +36,10 @@ if [[ -n "$(git status -s)" ]]; then
 fi
 
 # fail if we are not on the master branch
-# if [[ "$(current_branch)" != "master" ]]; then
-#     echo "You must be on the master branch to publish"
-#     exit 1
-# fi
-
+if [[ "$(current_branch)" != "master" ]]; then
+    echo "You must be on the master branch to publish"
+    exit 1
+fi
 
 # get any new tags from remote
 git fetch --tags
@@ -59,10 +58,8 @@ case "$choice" in
   * ) exit 1;;
 esac
 
- 
-# originMaster=$(git rev-parse origin/master)
-# echo "Tagging commit $originMaster with $newVersion... "
-# git tag "$newVersion" "${originMaster:?}"
-# git push origin refs/tags/$newVersion
+origin_master=$(git rev-parse origin/master)
+echo "Tagging commit $origin_master with $next_version... "
+git tag "$next_version" "${origin_master:?}"
 
-
+git push --tags
