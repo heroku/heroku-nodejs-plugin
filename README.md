@@ -55,3 +55,6 @@ $ NODE_OPTIONS="--require {{ working directory }}/heroku-nodejs-plugin/heroku-no
 
 Example app with periodic event loop and gc activity: https://github.com/heroku/node-metrics-single-process
 
+## Publishing new versions
+
+New versions can be published to Github releases by merging all changes to master and running `publish.sh`
