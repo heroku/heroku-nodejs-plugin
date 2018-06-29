@@ -36,10 +36,10 @@ if [[ -n "$(git status -s)" ]]; then
 fi
 
 # fail if we are not on the master branch
-if [[ "$(current_branch)" != "master" ]]; then
-    echo "You must be on the master branch to publish"
-    exit 1
-fi
+# if [[ "$(current_branch)" != "master" ]]; then
+#     echo "You must be on the master branch to publish"
+#     exit 1
+# fi
 
 
 # get any new tags from remote
