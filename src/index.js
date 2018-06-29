@@ -6,6 +6,11 @@ const nativeStats = require('./nativeStats');
 
 const METRICS_INTERVAL = parseInt(process.env.METRICS_INTERVAL_OVERRIDE, 10) || 20000; // 20 seconds
 
+// Set a minimum of 10 seconds
+if (METRICS_INTERVAL < 10000) {
+  METRICS_INTERVAL = 10000;
+}
+
 // Collects the event loop ticks, and calculates p50, p95, p99, max
 let delay = new Histogram();
 
