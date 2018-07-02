@@ -51,7 +51,7 @@ and including the built module in another local Node app like:
 
 ```
 $ NODE_OPTIONS="--require {{ working directory }}/heroku-nodejs-plugin/heroku-nodejs-plugin" HEROKU_METRICS_URL="http://localhost:5001" node src/index.js
-``
+```
 
 Example app with periodic event loop and gc activity: https://github.com/heroku/node-metrics-single-process
 
