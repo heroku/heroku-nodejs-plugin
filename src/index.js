@@ -46,7 +46,7 @@ function submitData(data, cb) {
 
 // every METRICS_INTERVAL seconds, submit a metrics payload to metricsURL.
 setInterval(() => {
-  let { ticks, gcCount, gcTime } = nativeStats.sense();
+  let { ticks, gcCount, gcTime, oldGcCount, oldGcTime, youngGcCount, youngGcTime } = nativeStats.sense();
   let totalEventLoopTime = ticks.reduce((a, b) => a + b, 0);
 
   ticks.forEach(tick => delay.update(tick));
@@ -59,6 +59,10 @@ setInterval(() => {
     counters: {
       "node.gc.collections": gcCount,
       "node.gc.pause.ns": gcTime,
+      "node.gc.old.collections": oldGcCount,
+      "node.gc.old.pause.ns": oldGcTime,
+      "node.gc.young.collections": youngGcCount,
+      "node.gc.young.pause.ns": youngGcTime,
     },
     gauges: {
       "node.eventloop.usage.percent": aa,
