@@ -1,9 +1,11 @@
 const http = require('http');
 const https = require('https');
 const url = require('url');
+const util = require('util');
 const { Histogram } = require("measured");
 const nativeStats = require('./nativeStats');
 
+const log = util.debuglog('heroku');
 const METRICS_INTERVAL = parseInt(process.env.METRICS_INTERVAL_OVERRIDE, 10) || 20000; // 20 seconds
 
 // Set a minimum of 10 seconds
@@ -71,7 +73,7 @@ setInterval(() => {
 
   submitData(data, (err, res) => {
     if (err !== null) {
-      console.log(
+      log(
         "[heroku-nodejs-plugin] error when trying to submit data: ",
         err
       );
@@ -79,7 +81,7 @@ setInterval(() => {
     }
 
     if (res.statusCode !== 200) {
-      console.log(
+      log(
         "[heroku-nodejs-plugin] expected 200 when trying to submit data, got:",
         res.statusCode
       );
