@@ -20,8 +20,12 @@ See: https://github.com/heroku/heroku-nodejs-metrics-buildpack for more details
 ```json
 {
   "counters": {
-    "node.gc.collections": 0,
-    "node.gc.pause.ns": 0
+    "node.gc.collections": 748,
+    "node.gc.pause.ns": 92179835,
+    "node.gc.old.collections": 2,
+    "node.gc.old.pause.ns": 671054,
+    "node.gc.young.collections": 746,
+    "node.gc.young.pause.ns": 91508781
   },
   "gauges": {
     "node.eventloop.usage.percent": 0.12,
