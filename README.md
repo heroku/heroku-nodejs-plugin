@@ -15,6 +15,16 @@ This data is exposed to a JS loop that periodically sends data to Heroku's metri
 
 See: https://github.com/heroku/heroku-nodejs-metrics-buildpack for more details
 
+## Debugging
+
+If the plugin is not working for you once you have enabled the feature on Heroku, the first thing
+you should do is set the ENV var `NODE_DEBUG` to `heroku`. By default all logging from the plugin
+is silenced.
+
+```
+$ heroku config:set NODE_DEBUG=heroku -a $APP_NAME
+```
+
 ## Metrics collected
 
 ```json
