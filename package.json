@@ -9,7 +9,7 @@
     "test": "exit 0"
   },
   "dependencies": {
-    "github-release-cli": "^0.4.1",
+    "github-release-cli": "^1.3.1",
     "measured": "^1.1.0",
     "nan": "^2.13.2",
     "node-gyp": "^3.7.0",
