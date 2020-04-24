@@ -1,6 +1,8 @@
 # Node.js Plugin Changelog
 
 ## master
+
+## v7 (2020-04-23)
 - Add Node 14 to releases ([#18](https://github.com/heroku/heroku-nodejs-plugin/pull/18))
 
 ## v6 (2019-10-23)
