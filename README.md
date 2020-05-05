@@ -1,7 +1,7 @@
 # heroku-nodejs-plugin
 
 A metrics plugin to add [Heroku runtime metrics](https://devcenter.heroku.com/articles/language-runtime-metrics)
-to an existing Node.js application.
+to an existing Node.js application. The plugin is added to a [vendor directory](https://github.com/heroku/heroku-buildpack-nodejs/tree/master/plugin) in https://github.com/heroku/heroku-buildpack-nodejs.
 
 # How does it work?
 
@@ -10,10 +10,6 @@ around GC invocations, and during the `prepare` and `check` phases of the event 
 amount of time spent in each.
 
 This data is exposed to a JS loop that periodically sends data to Heroku's metrics service.
-
-## Usage
-
-See: https://github.com/heroku/heroku-nodejs-metrics-buildpack for more details
 
 ## Debugging
 
