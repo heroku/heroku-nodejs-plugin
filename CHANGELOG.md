@@ -1,6 +1,7 @@
 # Node.js Plugin Changelog
 
 ## master
+- Update elliptic package ([#23](https://github.com/heroku/heroku-nodejs-plugin/pull/23))
 
 ## v7 (2020-04-23)
 - Add Node 14 to releases ([#18](https://github.com/heroku/heroku-nodejs-plugin/pull/18))
