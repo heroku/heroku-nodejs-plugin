@@ -16,5 +16,6 @@ npx webpack-cli
 
 # copy over the README
 cp ./src/README.md ./heroku-nodejs-plugin/README.md
+echo { \"type\": \"commonjs\" } > ./heroku-nodejs-plugin/package.json
 
 echo "Successfully built plugin"
