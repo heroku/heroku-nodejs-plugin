@@ -1,6 +1,8 @@
 # Node.js Plugin Changelog
 
 ## master
+
+## v8 (2020-10-21)
 - Update elliptic package ([#23](https://github.com/heroku/heroku-nodejs-plugin/pull/23))
 
 ## v7 (2020-04-23)
