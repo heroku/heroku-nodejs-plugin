@@ -2,14 +2,36 @@ version: 2.1
 orbs:
   node: circleci/node@4.1.0
   python: circleci/python@1.3.2
+jobs:
+  build-and-run-test:
+    parameters:
+      node-version:
+        default: latest
+        type: string
+    executor: python/default
+    steps:
+      - checkout
+      - node/install:
+          node-version: '<< parameters.node-version >>'
+      - node/install-packages
+      - run:
+          name: Build plugin
+          command: npm run build
+      - run: 
+          name: Run tests
+          command: npm test
 workflows:
   plugin-tests:
     jobs:
-      - node/test:
-          matrix:
-            parameters:
-              version:
-                - 15.4.0
-                - 14.15.1
-                - 12.20.0
-                - 10.23.0
+      - build-and-run-test:
+          name: "Build and test Node 15"
+          node-version: 15.4.0
+      - build-and-run-test:
+          name: "Build and test Node 14"
+          node-version: 14.15.1
+      - build-and-run-test:
+          name: "Build and test Node 12"
+          node-version: 12.20.0
+      - build-and-run-test:
+          name: "Build and test Node 10"
+          node-version: 10.23.0
