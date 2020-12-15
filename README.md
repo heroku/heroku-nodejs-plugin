@@ -1,7 +1,7 @@
 # heroku-nodejs-plugin
 
 A metrics plugin to add [Heroku runtime metrics](https://devcenter.heroku.com/articles/language-runtime-metrics)
-to an existing Node.js application. The plugin is added to a [vendor directory](https://github.com/heroku/heroku-buildpack-nodejs/tree/master/plugin) in https://github.com/heroku/heroku-buildpack-nodejs.
+to an existing Node.js application. The plugin is added to a [vendor directory](https://github.com/heroku/heroku-buildpack-nodejs/tree/main/plugin) in https://github.com/heroku/heroku-buildpack-nodejs.
 
 # How does it work?
 
@@ -67,4 +67,4 @@ Example app with periodic event loop and gc activity: https://github.com/heroku/
 
 ## Publishing new versions
 
-New versions can be published to Github releases by merging all changes to master and running `publish.sh`
+New versions can be published to Github releases by merging all changes to `main` and running `publish.sh`

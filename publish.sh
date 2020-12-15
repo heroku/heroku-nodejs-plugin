@@ -35,9 +35,9 @@ if [[ -n "$(git status -s)" ]]; then
     exit 1
 fi
 
-# fail if we are not on the master branch
-if [[ "$(current_branch)" != "master" ]]; then
-    echo "You must be on the master branch to publish"
+# fail if we are not on the main branch
+if [[ "$(current_branch)" != "main" ]]; then
+    echo "You must be on the main branch to publish"
     exit 1
 fi
 
@@ -58,8 +58,8 @@ case "$choice" in
   * ) exit 1;;
 esac
 
-origin_master=$(git rev-parse origin/master)
-echo "Tagging commit $origin_master with $next_version... "
-git tag "$next_version" "${origin_master:?}"
+origin_main=$(git rev-parse origin/main)
+echo "Tagging commit $origin_main with $next_version... "
+git tag "$next_version" "${origin_main:?}"
 
 git push --tags
