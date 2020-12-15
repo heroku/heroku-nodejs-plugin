@@ -3,3 +3,5 @@ node_modules
 build
 heroku-nodejs-plugin
 .vscode
+*.tar.gz
+*.sha512

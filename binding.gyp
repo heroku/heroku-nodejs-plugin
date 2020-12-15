@@ -15,7 +15,11 @@
 			"dependencies": ["heroku-nodejs-plugin"],
 			"copies": [
 				{
-					"files": ["./build/Release/heroku-nodejs-plugin.node"],
+					"files": [
+						"./src/README.md",
+						"./build/Release/heroku-nodejs-plugin.node",
+						"./package.json"
+					],
 					"destination": "./heroku-nodejs-plugin/"
 				}
 			]
