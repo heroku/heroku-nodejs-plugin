@@ -14,7 +14,4 @@ npx node-gyp configure build
 # roll the javascript into one file
 npx webpack-cli
 
-# copy over the README
-cp ./src/README.md ./heroku-nodejs-plugin/README.md
-
 echo "Successfully built plugin"
