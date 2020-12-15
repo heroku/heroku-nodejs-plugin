@@ -1,6 +1,7 @@
 # Node.js Plugin Changelog
 
 ## master
+- Specify `commonjs` module usage for app usage ([#30](https://github.com/heroku/heroku-nodejs-plugin/pull/30))
 
 ## v8 (2020-10-21)
 - Update elliptic package ([#23](https://github.com/heroku/heroku-nodejs-plugin/pull/23))
