@@ -8,9 +8,6 @@ jobs:
       node-version:
         default: latest
         type: string
-      node-major:
-        default: 15
-        type: integer
     executor: python/default
     steps:
       - checkout
@@ -24,37 +21,45 @@ jobs:
           name: Run tests
           command: npm test
       - run:
-          command: mkdir heroku-nodejs-plugin-<< parameters.node-major >>
+          command: mkdir heroku-nodejs-plugin-<< parameters.node-version >>
       - run:
-          command: cp heroku-nodejs-plugin/* heroku-nodejs-plugin-<< parameters.node-major >>
+          command: cp heroku-nodejs-plugin/* heroku-nodejs-plugin-<< parameters.node-version >>
       - persist_to_workspace:
           root: .
           paths:
-            - heroku-nodejs-plugin-<< parameters.node-major >>
+            - heroku-nodejs-plugin-<< parameters.node-version >>
+            - node_modules
   release-to-github:
     parameters:
-      node-major:
-        default: 15
-        type: integer
+      node-version:
+        default: latest
+        type: string
     docker:
       - image: cimg/base:stable
     steps:
       - attach_workspace:
           at: /tmp/workspace
       - checkout
+      - node/install:
+          node-version: << parameters.node-version >>
       - run:
           name: Copy plugin to workspace
-          command: cp -r /tmp/workspace/heroku-nodejs-plugin-<< parameters.node-major >> .
+          command: cp -r /tmp/workspace/heroku-nodejs-plugin-<< parameters.node-version >> .
+      - run:
+          name: Copy modules to workspace
+          command: cp -r /tmp/workspace/node_modules .
+      - run:
+          name: Run deploy script
+          command: ./deploy.sh << parameters.node-version >>
 workflows:
   build-plugin:
     jobs:
       - build-and-test:
           name: "Build and test Node 15 plugin"
-          node-version: 15.4.0
-          node-major: 15
+          node-version: '15'
       - release-to-github:
           name: "Release Node 15 plugin"
-          node-major: 15
+          node-version: '15'
           filters:
             branches:
               ignore: /.*/
@@ -64,11 +69,10 @@ workflows:
             - "Build and test Node 15 plugin"
       - build-and-test:
           name: "Build and test Node 14 plugin"
-          node-version: 14.15.1
-          node-major: 14
+          node-version: '14'
       - release-to-github:
           name: "Release Node 14 plugin"
-          node-major: 14
+          node-version: '14'
           filters:
             branches:
               ignore: /.*/
@@ -78,11 +82,10 @@ workflows:
             - "Build and test Node 14 plugin"
       - build-and-test:
           name: "Build and test Node 12 plugin"
-          node-version: 12.20.0
-          node-major: 12
+          node-version: '12'
       - release-to-github:
           name: "Release Node 12 plugin"
-          node-major: 12
+          node-version: '12'
           filters:
             branches:
               ignore: /.*/
@@ -92,11 +95,10 @@ workflows:
             - "Build and test Node 12 plugin"
       - build-and-test:
           name: "Build and test Node 10 plugin"
-          node-version: 10.23.0
-          node-major: 10
+          node-version: '10'
       - release-to-github:
           name: "Release Node 10 plugin"
-          node-major: 10
+          node-version: '10'
           filters:
             branches:
               ignore: /.*/
