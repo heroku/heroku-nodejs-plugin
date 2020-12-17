@@ -29,24 +29,19 @@ jobs:
           paths:
             - heroku-nodejs-plugin-<< parameters.node-version >>
   create-github-release:
-    parameters:
-      node-version:
-        default: latest
-        type: string
     docker:
       - image: cimg/base:stable
     steps:
       - attach_workspace:
           at: /tmp/workspace
       - checkout
-      - node/install:
-          node-version: << parameters.node-version >>
+      - node/install
       - run:
           name: Install dependencies
           command: npm install --ignore-scripts --only=dev
       - run:
           name: Create release
-          command: ./scripts/create-release.sh << parameters.node-version >>
+          command: ./scripts/create-release.sh
   push-assets-to-github:
     parameters:
       node-version:
@@ -75,43 +70,42 @@ workflows:
       - build-and-test:
           name: "Build and test Node 15 plugin"
           node-version: '15'
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - build-and-test:
           name: "Build and test Node 14 plugin"
           node-version: '14'
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - build-and-test:
           name: "Build and test Node 12 plugin"
           node-version: '12'
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - build-and-test:
           name: "Build and test Node 10 plugin"
           node-version: '10'
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - create-github-release:
           name: "Create GitHub Release"
-          node-version: '15'
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
           requires:
             - "Build and test Node 15 plugin"
             - "Build and test Node 14 plugin"
@@ -122,72 +116,72 @@ workflows:
           node-version: '15'
           requires:
             - "Create GitHub Release"
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - push-assets-to-github:
           name: "Upload Node 14 plugin"
           node-version: '14'
           requires:
             - "Create GitHub Release"
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - push-assets-to-github:
           name: "Upload Node 12 plugin"
           node-version: '12'
           requires:
             - "Create GitHub Release"
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - push-assets-to-github:
           name: "Upload Node 10 plugin"
           node-version: '10'
           requires:
             - "Create GitHub Release"
-          # filters:
-          #   branches:
-          #     ignore: /.*/
-          #   tags:
-          #     only: /^v+(\d)*$/
-  # test-plugin:
-  #   jobs:
-  #     - build-and-test:
-  #         name: "Build and test Node 15 plugin"
-  #         node-version: '15'
-  #         filters:
-  #           branches:
-  #             only: /.*/
-  #           tags:
-  #             ignore: /.*/
-  #     - build-and-test:
-  #         name: "Build and test Node 14 plugin"
-  #         node-version: '14'
-  #         filters:
-  #           branches:
-  #             only: /.*/
-  #           tags:
-  #             ignore: /.*/
-  #     - build-and-test:
-  #         name: "Build and test Node 12 plugin"
-  #         node-version: '12'
-  #         filters:
-  #           branches:
-  #             only: /.*/
-  #           tags:
-  #             ignore: /.*/
-  #     - build-and-test:
-  #         name: "Build and test Node 10 plugin"
-  #         node-version: '10'
-  #         filters:
-  #           branches:
-  #             only: /.*/
-  #           tags:
-  #             ignore: /.*/
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
+  test-plugin:
+    jobs:
+      - build-and-test:
+          name: "Build and test Node 15 plugin"
+          node-version: '15'
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
+      - build-and-test:
+          name: "Build and test Node 14 plugin"
+          node-version: '14'
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
+      - build-and-test:
+          name: "Build and test Node 12 plugin"
+          node-version: '12'
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
+      - build-and-test:
+          name: "Build and test Node 10 plugin"
+          node-version: '10'
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
