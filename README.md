@@ -69,4 +69,4 @@ Example app with periodic event loop and gc activity: https://github.com/heroku/
 
 ## Publishing new versions
 
-New versions can be published to Github releases by merging all changes to `main` and running `publish.sh`
+New versions can be published to Github releases by merging all changes to `main` and running `scripts/publish.sh`
