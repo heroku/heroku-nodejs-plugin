@@ -5,7 +5,7 @@ set -o pipefail   # don't ignore exit codes when piping output
 
 NODE_VERSION=$1
 
-if [[ $CIRCLE_BRANCH == "main" ]] && [[ -n $CIRCLE_TAG ]]; then
+if [[ $CIRCLE_PROJECT_USERNAME == "heroku" ]] && [[ -n $CIRCLE_TAG ]]; then
     # Name the tarball
     ARCHIVE_NAME="heroku-nodejs-plugin-node-$NODE_VERSION-$CIRCLE_TAG.tar.gz"
     ARCHIVE_SHA_NAME="heroku-nodejs-plugin-node-$NODE_VERSION-$CIRCLE_TAG.sha512"
@@ -26,6 +26,6 @@ if [[ $CIRCLE_BRANCH == "main" ]] && [[ -n $CIRCLE_TAG ]]; then
 
     echo "Successfully published released"
 else
-    echo "Skipping deploy because branch is: $CIRCLE_BRANCH; and git tag is: $CIRCLE_TAG"
+    echo "Skipping deploy username is: $CIRCLE_PROJECT_USERNAME; and git tag is: $CIRCLE_TAG"
 fi
 
