@@ -52,7 +52,7 @@ jobs:
           name: Run deploy script
           command: ./deploy.sh << parameters.node-version >>
 workflows:
-  build-plugin:
+  plugin-tests:
     jobs:
       - build-and-test:
           name: "Build and test Node 15 plugin"
@@ -64,7 +64,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v[0-9]+(\.[0-9]+)*$/
+              only: /^v+(\d)*$/
           requires:
             - "Build and test Node 15 plugin"
       - build-and-test:
@@ -77,7 +77,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v[0-9]+(\.[0-9]+)*$/
+              only: /^v+(\d)*$/
           requires:
             - "Build and test Node 14 plugin"
       - build-and-test:
@@ -90,7 +90,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v[0-9]+(\.[0-9]+)*$/
+              only: /^v+(\d)*$/
           requires:
             - "Build and test Node 12 plugin"
       - build-and-test:
@@ -103,6 +103,6 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v[0-9]+(\.[0-9]+)*$/
+              only: /^v+(\d)*$/
           requires:
             - "Build and test Node 10 plugin"
