@@ -14,12 +14,10 @@ let octokit = new Octokit({
     data: {
       upload_url
     }
-  } = await octokit.repos.createRelease({
+  } = await octokit.repos.getReleaseByTag({
     owner: 'heroku',
     repo: 'heroku-nodejs-plugin',
-    tag_name: CIRCLE_TAG,
-    name: CIRCLE_TAG,
-    body: CIRCLE_TAG,
+    tag: CIRCLE_TAG,
   });
 
   let uploadParams = {
