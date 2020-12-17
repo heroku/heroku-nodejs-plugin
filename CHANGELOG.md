@@ -2,7 +2,7 @@
 
 ## main
 
-## v8 (2020-12-15)
+## v8 (2020-12-17)
 - Specify `commonjs` module usage for app usage ([#30](https://github.com/heroku/heroku-nodejs-plugin/pull/30))
 - Change base branch to `main` ([#31](https://github.com/heroku/heroku-nodejs-plugin/pull/31))
 - Upgrade dependencies ([#32](https://github.com/heroku/heroku-nodejs-plugin/pull/32))
