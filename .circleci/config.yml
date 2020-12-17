@@ -1,0 +1,108 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.1.0
+  python: circleci/python@1.3.2
+jobs:
+  build-and-test:
+    parameters:
+      node-version:
+        default: latest
+        type: string
+    executor: python/default
+    steps:
+      - checkout
+      - node/install:
+          node-version: '<< parameters.node-version >>'
+      - node/install-packages
+      - run:
+          name: Build plugin
+          command: npm run build
+      - run: 
+          name: Run tests
+          command: npm test
+      - run:
+          command: mkdir heroku-nodejs-plugin-<< parameters.node-version >>
+      - run:
+          command: cp heroku-nodejs-plugin/* heroku-nodejs-plugin-<< parameters.node-version >>
+      - persist_to_workspace:
+          root: .
+          paths:
+            - heroku-nodejs-plugin-<< parameters.node-version >>
+            - node_modules
+  release-to-github:
+    parameters:
+      node-version:
+        default: latest
+        type: string
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - node/install:
+          node-version: << parameters.node-version >>
+      - run:
+          name: Copy plugin to workspace
+          command: cp -r /tmp/workspace/heroku-nodejs-plugin-<< parameters.node-version >> .
+      - run:
+          name: Copy modules to workspace
+          command: cp -r /tmp/workspace/node_modules .
+      - run:
+          name: Run deploy script
+          command: ./deploy.sh << parameters.node-version >>
+workflows:
+  build-plugin:
+    jobs:
+      - build-and-test:
+          name: "Build and test Node 15 plugin"
+          node-version: '15'
+      - release-to-github:
+          name: "Release Node 15 plugin"
+          node-version: '15'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*$/
+          requires:
+            - "Build and test Node 15 plugin"
+      - build-and-test:
+          name: "Build and test Node 14 plugin"
+          node-version: '14'
+      - release-to-github:
+          name: "Release Node 14 plugin"
+          node-version: '14'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*$/
+          requires:
+            - "Build and test Node 14 plugin"
+      - build-and-test:
+          name: "Build and test Node 12 plugin"
+          node-version: '12'
+      - release-to-github:
+          name: "Release Node 12 plugin"
+          node-version: '12'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*$/
+          requires:
+            - "Build and test Node 12 plugin"
+      - build-and-test:
+          name: "Build and test Node 10 plugin"
+          node-version: '10'
+      - release-to-github:
+          name: "Release Node 10 plugin"
+          node-version: '10'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*$/
+          requires:
+            - "Build and test Node 10 plugin"
