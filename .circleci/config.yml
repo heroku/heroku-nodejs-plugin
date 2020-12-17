@@ -187,3 +187,13 @@ workflows:
               only: /.*/
             tags:
               ignore: /.*/
+      - push-assets-to-github:
+          name: "Upload Node 14 plugin"
+          node-version: '14'
+          requires:
+            - "Build and test Node 14 plugin"
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
