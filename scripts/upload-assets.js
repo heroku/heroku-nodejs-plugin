@@ -1,6 +1,7 @@
 const archiveName = process.argv[2];
 const archiveShaName = process.argv[3];
 
+const fs = require("fs");
 const { Octokit } = require("@octokit/rest");
 const { assign } = Object;
 const { GITHUB_TOKEN, CIRCLE_TAG } = process.env;
@@ -28,13 +29,16 @@ let octokit = new Octokit({
     },
   };
 
+  let archive = await fs.readFileSync(archiveName);
+  let archiveSha = await fs.readFileSync(archiveShaName);
+
   await Promise.all([
     octokit.request(assign(uploadParams, {
-      data: archiveName,
+      data: archive,
       name: archiveName
     })),
     octokit.request(assign(uploadParams, {
-      data: archiveShaName,
+      data: archiveSha,
       name: archiveShaName
     }))
   ]);
