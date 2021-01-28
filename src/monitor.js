@@ -2,7 +2,7 @@ const http = require('http');
 const https = require('https');
 const url = require('url');
 const util = require('util');
-const { Histogram } = require("measured");
+const { Histogram } = require("measured-core");
 const nativeStats = require('./nativeStats');
 
 // url is where the runtime metrics will be posted to. This is added
