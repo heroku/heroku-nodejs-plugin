@@ -4,13 +4,14 @@
   "version": "0.1.0",
   "description": "A module that forwards stats from a Node process into the Heroku metrics system",
   "scripts": {
-    "postinstall": "node-gyp rebuild && webpack-cli --no-stats"
+    "postinstall": "webpack-cli --no-stats"
   },
   "dependencies": {
     "measured-core": "^2.0.0",
     "nan": "^2.14.2"
   },
   "devDependencies": {
+    "@octokit/rest": "^18.0.15",
     "node-gyp": "^7.1.2",
     "webpack": "^5.18.0",
     "webpack-cli": "^4.4.0"

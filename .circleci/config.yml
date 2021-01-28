@@ -15,10 +15,7 @@ jobs:
           node-version: '<< parameters.node-version >>'
       - run:
           name: Install dependencies
-          command: npm install --production
-      - run:
-          name: Build plugin
-          command: npm run build
+          command: npm install
       - run: 
           name: Run tests
           command: npm test

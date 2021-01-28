@@ -1,6 +1,7 @@
 # Node.js Plugin Changelog
 
 ## main
+- Update dependencies ([#42](https://github.com/heroku/heroku-nodejs-plugin/pull/42))
 
 ## v8 (2020-12-17)
 - Specify `commonjs` module usage for app usage ([#30](https://github.com/heroku/heroku-nodejs-plugin/pull/30))
