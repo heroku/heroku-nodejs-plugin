@@ -13,7 +13,7 @@ if [[ $CIRCLE_PROJECT_USERNAME == "heroku" ]] && [[ -n $CIRCLE_TAG ]]; then
     echo "Saving build as $ARCHIVE_NAME"
 
     # Compress the built directory into a tarball
-    tar -czf $ARCHIVE_NAME "heroku-nodejs-plugin-$NODE_VERSION/"
+    tar -czf $ARCHIVE_NAME "heroku-nodejs-plugin"
     # Generate a SHA and save that
     sha512sum $ARCHIVE_NAME > $ARCHIVE_SHA_NAME
 
