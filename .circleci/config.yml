@@ -73,8 +73,8 @@ workflows:
   build-plugin:
     jobs:
       - build-and-test:
-          name: "Build and test Node 15 plugin"
-          node-version: '15'
+          name: "Build and test Node 16 plugin"
+          node-version: '16'
           filters:
             branches:
               ignore: /.*/
@@ -96,14 +96,6 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v+(\d)*$/
-      - build-and-test:
-          name: "Build and test Node 10 plugin"
-          node-version: '10'
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v+(\d)*$/
       - create-github-release:
           name: "Create GitHub Release"
           filters:
@@ -112,13 +104,12 @@ workflows:
             tags:
               only: /^v+(\d)*$/
           requires:
-            - "Build and test Node 15 plugin"
+            - "Build and test Node 16 plugin"
             - "Build and test Node 14 plugin"
             - "Build and test Node 12 plugin"
-            - "Build and test Node 10 plugin"
       - push-assets-to-github:
-          name: "Upload Node 15 plugin"
-          node-version: '15'
+          name: "Upload Node 16 plugin"
+          node-version: '16'
           requires:
             - "Create GitHub Release"
           filters:
@@ -146,21 +137,11 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v+(\d)*$/
-      - push-assets-to-github:
-          name: "Upload Node 10 plugin"
-          node-version: '10'
-          requires:
-            - "Create GitHub Release"
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v+(\d)*$/
   test-plugin:
     jobs:
       - build-and-test:
-          name: "Build and test Node 15 plugin"
-          node-version: '15'
+          name: "Build and test Node 16 plugin"
+          node-version: '16'
           filters:
             branches:
               only: /.*/
@@ -177,14 +158,6 @@ workflows:
       - build-and-test:
           name: "Build and test Node 12 plugin"
           node-version: '12'
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              ignore: /.*/
-      - build-and-test:
-          name: "Build and test Node 10 plugin"
-          node-version: '10'
           filters:
             branches:
               only: /.*/
