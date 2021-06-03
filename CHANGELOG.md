@@ -2,6 +2,9 @@
 
 ## main
 
+## v9 (2021-06-01)
+- Add Node 16 to releases; Remove Node 10 and 15 from releases ([#46](https://github.com/heroku/heroku-nodejs-plugin/pull/46))
+
 ## v8 (2020-12-17)
 - Specify `commonjs` module usage for app usage ([#30](https://github.com/heroku/heroku-nodejs-plugin/pull/30))
 - Change base branch to `main` ([#31](https://github.com/heroku/heroku-nodejs-plugin/pull/31))
