@@ -16,7 +16,7 @@
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
-    "@octokit/rest": "^18.11.4"
+    "@octokit/rest": "^18.12.0"
   },
   "license": "MIT",
   "repository": "https://github.com/heroku/heroku-nodejs-plugin",
