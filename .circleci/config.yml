@@ -127,16 +127,6 @@ workflows:
             tags:
               only: /^v+(\d)*$/
       - push-assets-to-github:
-          name: "Upload Node 18 plugin"
-          node-version: '18'
-          requires:
-            - "Create GitHub Release"
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v+(\d)*$/
-      - push-assets-to-github:
           name: "Upload Node 17 plugin"
           node-version: '17'
           requires:
