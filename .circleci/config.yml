@@ -73,6 +73,22 @@ workflows:
   build-plugin:
     jobs:
       - build-and-test:
+          name: "Build and test Node 18 plugin"
+          node-version: '18'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
+      - build-and-test:
+          name: "Build and test Node 17 plugin"
+          node-version: '17'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
+      - build-and-test:
           name: "Build and test Node 16 plugin"
           node-version: '16'
           filters:
@@ -88,14 +104,6 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v+(\d)*$/
-      - build-and-test:
-          name: "Build and test Node 12 plugin"
-          node-version: '12'
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v+(\d)*$/
       - create-github-release:
           name: "Create GitHub Release"
           filters:
@@ -104,9 +112,40 @@ workflows:
             tags:
               only: /^v+(\d)*$/
           requires:
+            - "Build and test Node 18 plugin"
+            - "Build and test Node 17 plugin"
             - "Build and test Node 16 plugin"
             - "Build and test Node 14 plugin"
-            - "Build and test Node 12 plugin"
+      - push-assets-to-github:
+          name: "Upload Node 18 plugin"
+          node-version: '18'
+          requires:
+            - "Create GitHub Release"
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
+      - push-assets-to-github:
+          name: "Upload Node 18 plugin"
+          node-version: '18'
+          requires:
+            - "Create GitHub Release"
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
+      - push-assets-to-github:
+          name: "Upload Node 17 plugin"
+          node-version: '17'
+          requires:
+            - "Create GitHub Release"
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v+(\d)*$/
       - push-assets-to-github:
           name: "Upload Node 16 plugin"
           node-version: '16'
@@ -127,18 +166,24 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v+(\d)*$/
-      - push-assets-to-github:
-          name: "Upload Node 12 plugin"
-          node-version: '12'
-          requires:
-            - "Create GitHub Release"
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v+(\d)*$/
   test-plugin:
     jobs:
+      - build-and-test:
+          name: "Build and test Node 18 plugin"
+          node-version: '18'
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
+      - build-and-test:
+          name: "Build and test Node 17 plugin"
+          node-version: '17'
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
       - build-and-test:
           name: "Build and test Node 16 plugin"
           node-version: '16'
@@ -150,14 +195,6 @@ workflows:
       - build-and-test:
           name: "Build and test Node 14 plugin"
           node-version: '14'
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              ignore: /.*/
-      - build-and-test:
-          name: "Build and test Node 12 plugin"
-          node-version: '12'
           filters:
             branches:
               only: /.*/
