@@ -1,0 +1,98 @@
+name: heroku/heroku-nodejs-plugin/test-plugin
+on:
+  push:
+env:
+  GITHUB_TOKEN: xxxxxxx
+jobs:
+  build-and-test:
+    if: ${{ !contains('refs/heads//.*/', github.ref) }}
+    runs-on: sfdc-hk-ubuntu-latest
+    container:
+      image: python:3.8
+    env:
+      node-version: xxxxxxx
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "${{ env.node-version }}"
+    - name: Install dependencies
+      run: npm install --production
+    - name: Build plugin
+      run: npm run build
+    - name: Run tests
+      run: npm test
+    - run: mkdir heroku-nodejs-plugin-${{ env.node-version }}
+    - run: cp heroku-nodejs-plugin/* heroku-nodejs-plugin-${{ env.node-version }}
+    - uses: actions/upload-artifact@v2
+      with:
+        path: "./heroku-nodejs-plugin-${{ env.node-version }}"
+  build-and-test_1:
+    if: ${{ !contains('refs/heads//.*/', github.ref) }}
+    runs-on: sfdc-hk-ubuntu-latest
+    container:
+      image: python:3.8
+    env:
+      node-version: xxxxxxx
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "${{ env.node-version }}"
+    - name: Install dependencies
+      run: npm install --production
+    - name: Build plugin
+      run: npm run build
+    - name: Run tests
+      run: npm test
+    - run: mkdir heroku-nodejs-plugin-${{ env.node-version }}
+    - run: cp heroku-nodejs-plugin/* heroku-nodejs-plugin-${{ env.node-version }}
+    - uses: actions/upload-artifact@v2
+      with:
+        path: "./heroku-nodejs-plugin-${{ env.node-version }}"
+  build-and-test_2:
+    if: ${{ !contains('refs/heads//.*/', github.ref) }}
+    runs-on: sfdc-hk-ubuntu-latest
+    container:
+      image: python:3.8
+    env:
+      node-version: xxxxxxx
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "${{ env.node-version }}"
+    - name: Install dependencies
+      run: npm install --production
+    - name: Build plugin
+      run: npm run build
+    - name: Run tests
+      run: npm test
+    - run: mkdir heroku-nodejs-plugin-${{ env.node-version }}
+    - run: cp heroku-nodejs-plugin/* heroku-nodejs-plugin-${{ env.node-version }}
+    - uses: actions/upload-artifact@v2
+      with:
+        path: "./heroku-nodejs-plugin-${{ env.node-version }}"
+  build-and-test_3:
+    if: ${{ !contains('refs/heads//.*/', github.ref) }}
+    runs-on: sfdc-hk-ubuntu-latest
+    container:
+      image: python:3.8
+    env:
+      node-version: xxxxxxx
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "${{ env.node-version }}"
+    - name: Install dependencies
+      run: npm install --production
+    - name: Build plugin
+      run: npm run build
+    - name: Run tests
+      run: npm test
+    - run: mkdir heroku-nodejs-plugin-${{ env.node-version }}
+    - run: cp heroku-nodejs-plugin/* heroku-nodejs-plugin-${{ env.node-version }}
+    - uses: actions/upload-artifact@v2
+      with:
+        path: "./heroku-nodejs-plugin-${{ env.node-version }}"
