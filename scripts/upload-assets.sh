@@ -5,7 +5,7 @@ set -o pipefail   # don't ignore exit codes when piping output
 
 NODE_VERSION=$1
 
-export GITHUB_TAG=${GITHUB_REF#/refs/tags/}
+export GITHUB_TAG=${GITHUB_REF#refs/tags/}
 
 if [[ $GITHUB_REPOSITORY_OWNER == "heroku" ]] && [[ -n $GITHUB_TAG ]]; then
     # Name the tarball
