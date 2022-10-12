@@ -1,6 +1,6 @@
 # heroku-nodejs-plugin
 
-[![CircleCI](https://circleci.com/gh/heroku/heroku-nodejs-plugin/tree/main.svg?style=svg)](https://circleci.com/gh/heroku/heroku-nodejs-plugin)
+[![CI](https://github.com/heroku/heroku-nodejs-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/heroku/heroku-nodejs-plugin/actions/workflows/ci.yml)
 
 A metrics plugin to add [Heroku runtime metrics](https://devcenter.heroku.com/articles/language-runtime-metrics)
 to an existing Node.js application. The plugin is added to a [vendor directory](https://github.com/heroku/heroku-buildpack-nodejs/tree/main/plugin) in https://github.com/heroku/heroku-buildpack-nodejs.
