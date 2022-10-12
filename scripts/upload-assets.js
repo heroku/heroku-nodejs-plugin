@@ -4,7 +4,7 @@ const archiveShaName = process.argv[3];
 const fs = require("fs");
 const { Octokit } = require("@octokit/rest");
 const { assign } = Object;
-const { GITHUB_TOKEN, CIRCLE_TAG } = process.env;
+const { GITHUB_TOKEN, GITHUB_TAG } = process.env;
 
 let octokit = new Octokit({
   auth: GITHUB_TOKEN,
@@ -18,7 +18,7 @@ let octokit = new Octokit({
   } = await octokit.repos.getReleaseByTag({
     owner: 'heroku',
     repo: 'heroku-nodejs-plugin',
-    tag: CIRCLE_TAG,
+    tag: GITHUB_TAG,
   });
 
   let uploadParams = {

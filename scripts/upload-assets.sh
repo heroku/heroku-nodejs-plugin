@@ -5,10 +5,12 @@ set -o pipefail   # don't ignore exit codes when piping output
 
 NODE_VERSION=$1
 
-if [[ $CIRCLE_PROJECT_USERNAME == "heroku" ]] && [[ -n $CIRCLE_TAG ]]; then
+export GITHUB_TAG=${GITHUB_REF#refs/tags/}
+
+if [[ $GITHUB_REPOSITORY_OWNER == "heroku" ]] && [[ -n $GITHUB_TAG ]]; then
     # Name the tarball
-    ARCHIVE_NAME="heroku-nodejs-plugin-node-$NODE_VERSION-$CIRCLE_TAG.tar.gz"
-    ARCHIVE_SHA_NAME="heroku-nodejs-plugin-node-$NODE_VERSION-$CIRCLE_TAG.sha512"
+    ARCHIVE_NAME="heroku-nodejs-plugin-node-$NODE_VERSION-$GITHUB_TAG.tar.gz"
+    ARCHIVE_SHA_NAME="heroku-nodejs-plugin-node-$NODE_VERSION-$GITHUB_TAG.sha512"
 
     echo "Saving build as $ARCHIVE_NAME"
 
@@ -26,6 +28,6 @@ if [[ $CIRCLE_PROJECT_USERNAME == "heroku" ]] && [[ -n $CIRCLE_TAG ]]; then
 
     echo "Successfully uploaded assets"
 else
-    echo "Skipping deploy username is: $CIRCLE_PROJECT_USERNAME; and git tag is: $CIRCLE_TAG"
+    echo "Skipping. Deploy username is: $GITHUB_REPOSITORY_OWNER; and git tag is: $GITHUB_TAG"
 fi
 
