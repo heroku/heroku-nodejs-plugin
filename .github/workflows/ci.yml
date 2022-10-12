@@ -32,7 +32,7 @@ jobs:
         run: npm test
 
   build:
-    if: ${{ startsWith('refs/tags/v', github.ref) }}
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: test
     runs-on: ubuntu-22.04
     strategy:
@@ -57,7 +57,7 @@ jobs:
         run: npm run build
 
   release:
-    if: ${{ startsWith('refs/tags/v', github.ref) }}
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: build
     runs-on: ubuntu-22.04
     env:
@@ -76,7 +76,7 @@ jobs:
         run: "./scripts/create-release.sh"
 
   upload:
-    if: ${{ startsWith('refs/tags/v', github.ref) }}
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: release
     runs-on: ubuntu-22.04
     env:
