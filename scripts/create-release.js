@@ -1,6 +1,6 @@
 const { Octokit } = require("@octokit/rest");
 const { assign } = Object;
-const { GITHUB_TOKEN, CIRCLE_TAG } = process.env;
+const { GITHUB_TOKEN, GITHUB_TAG } = process.env;
 
 let octokit = new Octokit({
   auth: GITHUB_TOKEN,
@@ -10,9 +10,9 @@ let octokit = new Octokit({
   await octokit.repos.createRelease({
     owner: 'heroku',
     repo: 'heroku-nodejs-plugin',
-    tag_name: CIRCLE_TAG,
-    name: CIRCLE_TAG,
-    body: CIRCLE_TAG,
+    tag_name: GITHUB_TAG,
+    name: GITHUB_TAG,
+    body: GITHUB_TAG,
   });
 })();
 
