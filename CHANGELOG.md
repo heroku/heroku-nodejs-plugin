@@ -2,6 +2,9 @@
 
 ## main
 
+## v12 (2023-04-19)
+- Add Node 20. ([#86](https://github.com/heroku/heroku-nodejs-plugin/pull/86))
+
 ## v11 (2022-10-19)
 - Add Node 19. ([#85](https://github.com/heroku/heroku-nodejs-plugin/pull/85))
 - Convert to GitHub Actions. Drop Node 17. ([#79](https://github.com/heroku/heroku-nodejs-plugin/pull/79))
