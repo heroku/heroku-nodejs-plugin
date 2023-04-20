@@ -59,7 +59,7 @@ jobs:
   release:
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: pub-hk-ubuntu-22.04-small
     env:
       GITHUB_TOKEN: ${{ github.token }}
     steps:
@@ -78,7 +78,7 @@ jobs:
   upload:
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: release
-    runs-on: ubuntu-22.04
+    runs-on: pub-hk-ubuntu-22.04-small
     env:
       GITHUB_TOKEN: ${{ github.token }}
     strategy:
