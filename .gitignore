@@ -5,3 +5,4 @@ heroku-nodejs-plugin
 .vscode
 *.tar.gz
 *.sha512
+.idea
