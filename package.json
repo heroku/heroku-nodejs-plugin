@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "measured": "^1.1.0",
-    "nan": "^2.17.0",
+    "nan": "^2.18.0",
     "node-gyp": "^9.4.0",
-    "webpack": "^5.72.1",
+    "webpack": "^5.76.0",
     "webpack-cli": "^5.1.4"
   },
   "devDependencies": {

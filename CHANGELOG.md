@@ -2,6 +2,10 @@
 
 ## main
 
+## v13 (2023-10-19)
+- Add Node 21.
+- Remove Node 14 and 16 from releases.
+
 ## v12 (2023-04-19)
 - Add Node 20. ([#86](https://github.com/heroku/heroku-nodejs-plugin/pull/86))
 
