@@ -1,7 +1,7 @@
 {
   "name": "heroku-nodejs-plugin",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "A module that forwards stats from a Node process into the Heroku metrics system",
   "scripts": {
     "postinstall": "./scripts/build.sh",
