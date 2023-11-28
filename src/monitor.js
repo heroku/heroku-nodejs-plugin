@@ -78,6 +78,13 @@ function start() {
     };
 
     submitData(data, (err, res) => {
+      // We don't ever read the body of the response, just the status code to ensure it is 200.
+      // As a result, we need to instruct node that we won't be using the body so that it can
+      // close out the connection. This is particularly important as in node 19+, http connections
+      // now default to `Connection: keep-alive` and if we don't call res.resume() then the socket
+      // for each metrics post request will be left alive and effectively causes a memory leak.
+      res.resume();
+
       if (err !== null) {
         log(
           "[heroku-nodejs-plugin] error when trying to submit data: ",
