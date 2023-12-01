@@ -83,7 +83,9 @@ function start() {
       // close out the connection. This is particularly important as in node 19+, http connections
       // now default to `Connection: keep-alive` and if we don't call res.resume() then the socket
       // for each metrics post request will be left alive and effectively causes a memory leak.
-      res.resume();
+      if (res) {
+        res.resume();
+      }
 
       if (err !== null) {
         log(
